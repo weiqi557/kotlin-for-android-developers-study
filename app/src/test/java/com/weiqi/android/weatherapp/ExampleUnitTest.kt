@@ -1,4 +1,4 @@
-package com.weiqi.android.weather
+package com.weiqi.android.weatherapp
 
 import org.junit.Test
 
