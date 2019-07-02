@@ -6,6 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.weiqi.android.weatherapp.R
 import com.weiqi.android.weatherapp.adapters.ForecastListAdapter
+import com.weiqi.android.weatherapp.data.Request
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.toast
+import org.jetbrains.anko.uiThread
 
 class MainActivity :AppCompatActivity(){
 
@@ -26,5 +31,15 @@ class MainActivity :AppCompatActivity(){
         val forecastList = findViewById<RecyclerView>(R.id.recyclerView)
         forecastList.layoutManager = LinearLayoutManager(this)
         forecastList.adapter = ForecastListAdapter(items)
+
+        val url = "http://api.openweathermap.org/data/2.5/forecast/daily?" +
+                "APPID=15646a06818f61f7b8d7823ca833e1ce&q=94043&mode=json&units=metric&cnt=7"
+
+        doAsync{
+            Request(url).run()
+            uiThread {
+                longToast("Request format")
+            }
+        }
     }
 }
