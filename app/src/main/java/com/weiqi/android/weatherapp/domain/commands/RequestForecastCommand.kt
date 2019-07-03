@@ -7,6 +7,6 @@ import com.weiqi.android.weatherapp.domain.model.ForecastList
 class RequestForecastCommand (val zipCode:String):Command<ForecastList>{
     override fun excute(): ForecastList {
         val foreRequest = ForecastRequest(zipCode)
-        return ForecastDataMapper().converFormDataModel(foreRequest.execute())
+        return ForecastDataMapper().convertFormDataModel(foreRequest.execute())
     }
 }

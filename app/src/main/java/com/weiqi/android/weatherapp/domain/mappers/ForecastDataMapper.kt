@@ -11,7 +11,7 @@ import com.weiqi.android.weatherapp.domain.model.Forecast as ModelForecast
 class ForecastDataMapper {
 
 
-    fun converFormDataModel(forecast: ForecastResult): ForecastList {
+    fun convertFormDataModel(forecast: ForecastResult): ForecastList {
         return ForecastList(
             forecast.city.name,
             forecast.city.country,

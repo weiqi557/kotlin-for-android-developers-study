@@ -11,12 +11,14 @@ import com.weiqi.android.weatherapp.R
 import com.weiqi.android.weatherapp.domain.model.Forecast
 import com.weiqi.android.weatherapp.domain.model.ForecastList
 import com.weiqi.android.weatherapp.utils.cxt
+import kotlinx.android.synthetic.main.item_forecast.view.*
 import org.jetbrains.anko.find
 
-class ForecastListAdapter(val weekForecast: ForecastList,val itemClick: (Forecast) -> Unit) : RecyclerView.Adapter<ForecastListAdapter.ViewHolder>() {
+class ForecastListAdapter(val weekForecast: ForecastList, val itemClick: (Forecast) -> Unit) :
+    RecyclerView.Adapter<ForecastListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(LayoutInflater.from(parent.cxt).inflate(R.layout.item_forecast, parent, false),itemClick)
+        return ViewHolder(LayoutInflater.from(parent.cxt).inflate(R.layout.item_forecast, parent, false), itemClick)
     }
 
     override fun getItemCount(): Int = weekForecast.size()
@@ -25,29 +27,16 @@ class ForecastListAdapter(val weekForecast: ForecastList,val itemClick: (Forecas
         holder.bindForecast(weekForecast[position])
     }
 
-    class ViewHolder(itemView: View,val itemClick:(Forecast) -> Unit) : RecyclerView.ViewHolder(itemView){
-
-        private val mImgIcon:ImageView
-        private val mTvDate:TextView
-        private val mTvDesc:TextView
-        private val mTvHigh:TextView
-        private val mTvLow:TextView
-
-        init {
-            mImgIcon = itemView.find(R.id.icon)
-            mTvDate = itemView.find(R.id.date)
-            mTvDesc = itemView.find(R.id.desc)
-            mTvHigh = itemView.find(R.id.high)
-            mTvLow = itemView.find(R.id.low)
-        }
+    class ViewHolder(itemView: View, val itemClick: (Forecast) -> Unit) : RecyclerView.ViewHolder(itemView) {
 
         fun bindForecast(forecast: Forecast) {
             with(forecast) {
-                Glide.with(itemView).load(iconUrl).into(mImgIcon)
-                mTvDate.text = date
-                mTvDesc.text = description
-                mTvHigh.text = "$high"
-                mTvLow.text = "$low"
+
+                Glide.with(itemView).load(iconUrl).into(itemView.icon)
+                itemView.date.text = date
+                itemView.desc.text = description
+                itemView.high.text = "$high"
+                itemView.low.text = "$low"
                 itemView.setOnClickListener { itemClick(this) }
             }
         }
