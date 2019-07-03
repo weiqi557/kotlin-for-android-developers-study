@@ -12,7 +12,7 @@ import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.uiThread
 
-class MainActivity :AppCompatActivity(){
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,14 +25,12 @@ class MainActivity :AppCompatActivity(){
         val url = "http://api.openweathermap.org/data/2.5/forecast/daily?" +
                 "APPID=15646a06818f61f7b8d7823ca833e1ce&q=94043&mode=json&units=metric&cnt=7"
 
-        doAsync{
+        doAsync {
             val result = RequestForecastCommand("94043").excute()
             uiThread {
-                forecastList.adapter = ForecastListAdapter(result, object : ForecastListAdapter.OnClickItemListener {
-                    override fun invoke(forecast: Forecast) {
-                        toast(forecast.toString())
-                    }
-                })
+                forecastList.adapter = ForecastListAdapter(result) { forecast ->
+                    toast(forecast.toString())
+                }
             }
         }
     }

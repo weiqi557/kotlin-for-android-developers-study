@@ -3,7 +3,6 @@ package com.weiqi.android.weatherapp.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -14,7 +13,7 @@ import com.weiqi.android.weatherapp.domain.model.ForecastList
 import com.weiqi.android.weatherapp.utils.cxt
 import org.jetbrains.anko.find
 
-class ForecastListAdapter(val weekForecast: ForecastList,val itemClick: OnClickItemListener) : RecyclerView.Adapter<ForecastListAdapter.ViewHolder>() {
+class ForecastListAdapter(val weekForecast: ForecastList,val itemClick: (Forecast) -> Unit) : RecyclerView.Adapter<ForecastListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.cxt).inflate(R.layout.item_forecast, parent, false),itemClick)
@@ -26,7 +25,7 @@ class ForecastListAdapter(val weekForecast: ForecastList,val itemClick: OnClickI
         holder.bindForecast(weekForecast[position])
     }
 
-    class ViewHolder(itemView: View,val itemClick:OnClickItemListener) : RecyclerView.ViewHolder(itemView){
+    class ViewHolder(itemView: View,val itemClick:(Forecast) -> Unit) : RecyclerView.ViewHolder(itemView){
 
         private val mImgIcon:ImageView
         private val mTvDate:TextView
