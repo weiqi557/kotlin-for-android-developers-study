@@ -1,7 +1,7 @@
 package com.weiqi.android.weatherapp
 
 import android.app.Application
-import com.weiqi.android.weatherapp.utils.DelegatesExt
+import com.weiqi.android.weatherapp.extensions.DelegatesExt
 
 class App :Application(){
 

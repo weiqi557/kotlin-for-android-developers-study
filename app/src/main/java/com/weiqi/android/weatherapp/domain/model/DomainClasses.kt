@@ -1,6 +1,7 @@
 package com.weiqi.android.weatherapp.domain.model
 
 data class ForecastList(
+    val id: Long,
     val city: String,
     val country: String,
     val dailyForecast: List<Forecast>) {
@@ -9,7 +10,7 @@ data class ForecastList(
 }
 
 data class Forecast(
-    val date: String,
+    val date: Long,
     val description: String,
     val high: Int,
     val low: Int,

@@ -1,7 +1,7 @@
 package com.weiqi.android.weatherapp.domain.mappers
 
-import com.weiqi.android.weatherapp.data.Forecast
-import com.weiqi.android.weatherapp.data.ForecastResult
+import com.weiqi.android.weatherapp.data.server.Forecast
+import com.weiqi.android.weatherapp.data.server.ForecastResult
 import com.weiqi.android.weatherapp.domain.model.ForecastList
 import java.text.DateFormat
 import java.util.*
@@ -11,11 +11,12 @@ import com.weiqi.android.weatherapp.domain.model.Forecast as ModelForecast
 class ForecastDataMapper {
 
 
-    fun convertFormDataModel(forecast: ForecastResult): ForecastList {
+    fun convertFormDataModel(zipCode:Long,forecast: ForecastResult): ForecastList = with(forecast){
         return ForecastList(
-            forecast.city.name,
-            forecast.city.country,
-            convertForecastListToDomain(forecast.list)
+            zipCode,
+            city.name,
+            city.country,
+            convertForecastListToDomain(list)
         )
     }
 
@@ -25,19 +26,14 @@ class ForecastDataMapper {
         }
     }
 
-    private fun convertForecastItemToDomain(forecast: Forecast): ModelForecast {
+    private fun convertForecastItemToDomain(forecast: Forecast): ModelForecast = with(forecast){
         return ModelForecast(
-            convertDate(forecast.dt),
-            forecast.weather[0].description,
-            forecast.temp.max.toInt(),
-            forecast.temp.min.toInt(),
-            generateIconUrl(forecast.weather[0].icon)
+            dt * 1000,
+            weather[0].description,
+            temp.max.toInt(),
+            temp.min.toInt(),
+            generateIconUrl(weather[0].icon)
         )
-    }
-
-    private fun convertDate(date: Long): String {
-        val df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault())
-        return df.format(date * 1000)
     }
 
     private fun generateIconUrl(iconCode: String): String {

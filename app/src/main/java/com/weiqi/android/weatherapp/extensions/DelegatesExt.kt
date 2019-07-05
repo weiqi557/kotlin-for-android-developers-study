@@ -1,10 +1,11 @@
-package com.weiqi.android.weatherapp.utils
+package com.weiqi.android.weatherapp.extensions
 
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
 
 object DelegatesExt {
-    fun <T> notNullSingleValueVar(): ReadWriteProperty<Any?, T> = NotNullSingleValueVar()
+    fun <T> notNullSingleValueVar(): ReadWriteProperty<Any?, T> =
+        NotNullSingleValueVar()
 }
 
 private class NotNullSingleValueVar<T> : ReadWriteProperty<Any?, T> {

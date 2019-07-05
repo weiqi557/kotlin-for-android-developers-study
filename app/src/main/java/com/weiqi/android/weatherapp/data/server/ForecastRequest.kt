@@ -1,9 +1,9 @@
-package com.weiqi.android.weatherapp.data
+package com.weiqi.android.weatherapp.data.server
 
 import com.google.gson.Gson
 import java.net.URL
 
-class ForecastRequest(private val zipCode:String){
+class ForecastRequest(private val zipCode:Long){
 
     companion object{
         private val APP_ID = "15646a06818f61f7b8d7823ca833e1ce"
@@ -11,8 +11,8 @@ class ForecastRequest(private val zipCode:String){
         private val COMPLETE_URL = "$URL&APPID=$APP_ID&q="
     }
 
-    fun execute():ForecastResult{
+    fun execute(): ForecastResult {
         val forecastJsonStr = URL(COMPLETE_URL + zipCode).readText()
-        return Gson().fromJson(forecastJsonStr,ForecastResult::class.java)
+        return Gson().fromJson(forecastJsonStr, ForecastResult::class.java)
     }
 }

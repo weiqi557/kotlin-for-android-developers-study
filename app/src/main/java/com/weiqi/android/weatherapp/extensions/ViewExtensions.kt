@@ -1,4 +1,4 @@
-package com.weiqi.android.weatherapp.utils
+package com.weiqi.android.weatherapp.extensions
 
 import android.content.Context
 import android.view.View

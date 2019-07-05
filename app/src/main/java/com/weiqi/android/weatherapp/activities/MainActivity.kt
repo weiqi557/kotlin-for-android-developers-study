@@ -20,12 +20,14 @@ class MainActivity : AppCompatActivity() {
         forecastList.layoutManager = LinearLayoutManager(this)
 
         doAsync {
-            val result = RequestForecastCommand("94043").excute()
+            val result = RequestForecastCommand(94043).excute()
             uiThread {
                 forecastList.adapter = ForecastListAdapter(result) { forecast ->
                     toast(forecast.toString())
                 }
             }
         }
+
+
     }
 }
