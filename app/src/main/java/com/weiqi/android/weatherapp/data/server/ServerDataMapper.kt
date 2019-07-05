@@ -1,17 +1,13 @@
-package com.weiqi.android.weatherapp.domain.mappers
+package com.weiqi.android.weatherapp.data.server
 
-import com.weiqi.android.weatherapp.data.server.Forecast
-import com.weiqi.android.weatherapp.data.server.ForecastResult
 import com.weiqi.android.weatherapp.domain.model.ForecastList
-import java.text.DateFormat
-import java.util.*
 
 import com.weiqi.android.weatherapp.domain.model.Forecast as ModelForecast
 
-class ForecastDataMapper {
+class ServerDataMapper {
 
 
-    fun convertFormDataModel(zipCode:Long,forecast: ForecastResult): ForecastList = with(forecast){
+    fun convertToDomain(zipCode:Long,forecast: ForecastResult): ForecastList = with(forecast){
         return ForecastList(
             zipCode,
             city.name,

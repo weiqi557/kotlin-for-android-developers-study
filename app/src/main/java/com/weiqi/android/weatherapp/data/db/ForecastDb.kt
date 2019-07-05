@@ -1,30 +1,36 @@
 package com.weiqi.android.weatherapp.data.db
 
+import com.weiqi.android.weatherapp.domain.datasource.ForecastDataSource
 import com.weiqi.android.weatherapp.domain.model.ForecastList
 import com.weiqi.android.weatherapp.extensions.clear
-import com.weiqi.android.weatherapp.extensions.parseList
-import com.weiqi.android.weatherapp.extensions.parseOpt
 import com.weiqi.android.weatherapp.extensions.toVarargArray
+import org.jetbrains.anko.db.MapRowParser
 import org.jetbrains.anko.db.insert
 import org.jetbrains.anko.db.select
 
 class ForecastDb(
     val forecastHelper: ForecastDbHelper = ForecastDbHelper.instance,
     val dataMapper: DbDataMapper = DbDataMapper()
-) {
+) : ForecastDataSource {
 
-    fun reuqestForecastByZipCode(zipCode: Long, date: Long) = forecastHelper.use {
+    override fun requestForecastByZipCode(zipCode: Long, date: Long) = forecastHelper.use {
 
         val dailyRequest = "${DayForecastTable.CITY_ID} = ? AND ${DayForecastTable.DATE} >= ?"
         val dailyForecast = select(DayForecastTable.NAME)
             .whereSimple(dailyRequest, zipCode.toString(), date.toString())
-            .parseList { DayForecast(HashMap(it)) }
+            .parseList(object : MapRowParser<DayForecast> {
+                override fun parseRow(columns: Map<String, Any?>): DayForecast {
+                    return DayForecast(columns as HashMap)
+                }
+            })
 
         val city = select(CityForecastTable.NAME)
             .whereSimple("${CityForecastTable.ID} = ?", zipCode.toString())
-            .parseOpt {
-                CityForecast(HashMap(it), dailyForecast)
-            }
+            .parseOpt(object : MapRowParser<CityForecast> {
+                override fun parseRow(columns: Map<String, Any?>): CityForecast {
+                    return CityForecast(columns as HashMap,dailyForecast)
+                }
+            })
         if (city != null) dataMapper.convertToDomain(city) else null
     }
 
